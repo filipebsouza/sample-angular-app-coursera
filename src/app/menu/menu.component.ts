@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Dish } from '../shared/dish.model';
-import { DISHES } from '../shared/dishes.model';
 import { FacadeService } from '../shared/services/facade.service';
 
 @Component({
@@ -10,7 +9,7 @@ import { FacadeService } from '../shared/services/facade.service';
 })
 export class MenuComponent implements OnInit {
 
-  dishes: Dish[] = DISHES;
+  dishes: Dish[];
   selectedDish: Dish;
 
   constructor(private facadeService: FacadeService) {
@@ -18,6 +17,7 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.facadeService.accountService.login('fake-user', 'password');
+    this.facadeService.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
   }
 
   onSelect(dish: Dish) {
