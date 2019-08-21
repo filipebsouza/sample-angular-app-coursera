@@ -1,4 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
+import { FacadeService } from '../shared/services/facade.service';
+
 import { Dish } from '../shared/dish.model';
 
 @Component({
@@ -8,11 +13,17 @@ import { Dish } from '../shared/dish.model';
 })
 export class DishdetailComponent implements OnInit {
 
-  @Input() dish: Dish;
+  dish: Dish;
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private location: Location, private facadeService: FacadeService) { }
 
   ngOnInit() {
+    const id = this.route.snapshot.params['id'];
+    this.facadeService.dishService.getDish(id).subscribe(dish => this.dish = dish);
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
 }
