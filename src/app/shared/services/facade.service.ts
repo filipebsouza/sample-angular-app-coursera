@@ -1,6 +1,8 @@
 import { Injectable, Injector } from '@angular/core';
+
 import { AccountService } from './account.service';
 import { DishService } from './dish.service';
+import { PromotionService } from './promotion.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +25,13 @@ export class FacadeService {
       this._dishService = this.injector.get(DishService);
     }
     return this._dishService;
+  }
+
+  private _promotionService: PromotionService;
+  public get promotionService(): PromotionService {
+    if (!this._promotionService) {
+      this._promotionService = this.injector.get(PromotionService);
+    }
+    return this._promotionService;
   }
 }
