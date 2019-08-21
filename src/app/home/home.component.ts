@@ -4,6 +4,7 @@ import { FacadeService } from '../shared/services/facade.service';
 
 import { Dish } from '../shared/dish.model';
 import { Promotion } from '../shared/promotion.model';
+import { Leader } from '../shared/leader.model';
 
 @Component({
   selector: 'app-home',
@@ -14,12 +15,14 @@ export class HomeComponent implements OnInit {
 
   dish: Dish;
   promotion: Promotion;
+  leader: Leader;
 
   constructor(private facadeService: FacadeService) { }
 
   ngOnInit() {
     this.facadeService.dishService.getFeaturedDish().subscribe(dish => this.dish = dish);
     this.facadeService.promotionService.getFeaturedPromotion().subscribe(promotion => this.promotion = promotion);
+    this.facadeService.leaderService.getFeaturedLeader().subscribe(leader => this.leader = leader);
   }
 
 }

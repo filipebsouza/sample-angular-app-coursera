@@ -3,6 +3,7 @@ import { Injectable, Injector } from '@angular/core';
 import { AccountService } from './account.service';
 import { DishService } from './dish.service';
 import { PromotionService } from './promotion.service';
+import { LeaderService } from './leader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,13 @@ export class FacadeService {
       this._promotionService = this.injector.get(PromotionService);
     }
     return this._promotionService;
+  }
+
+  private _leaderService: LeaderService;
+  public get leaderService(): LeaderService {
+    if (!this._leaderService) {
+      this._leaderService = this.injector.get(LeaderService);
+    }
+    return this._leaderService;
   }
 }
