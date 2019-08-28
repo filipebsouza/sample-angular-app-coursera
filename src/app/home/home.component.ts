@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { FacadeService } from '../shared/services/facade.service';
+import { DishService } from '../shared/services/dish.service';
+import { PromotionService } from '../shared/services/promotion.service';
+import { LeaderService } from '../shared/services/leader.service';
 
 import { Dish } from '../shared/dish.model';
 import { Promotion } from '../shared/promotion.model';
@@ -17,12 +19,12 @@ export class HomeComponent implements OnInit {
   promotion: Promotion;
   leader: Leader;
 
-  constructor(private facadeService: FacadeService) { }
+  constructor(private dishService: DishService, private promotionService: PromotionService, private leaderService: LeaderService) { }
 
   ngOnInit() {
-    this.facadeService.dishService.getFeaturedDish().subscribe(dish => this.dish = dish);
-    this.facadeService.promotionService.getFeaturedPromotion().subscribe(promotion => this.promotion = promotion);
-    this.facadeService.leaderService.getFeaturedLeader().subscribe(leader => this.leader = leader);
+    this.dishService.getFeaturedDish().then(dish => this.dish = dish);
+    this.promotionService.getFeaturedPromotion().then(promotion => this.promotion = promotion);
+    this.leaderService.getFeaturedLeader().then(leader => this.leader = leader);
   }
 
 }

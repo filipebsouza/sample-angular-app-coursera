@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Dish } from '../shared/dish.model';
-import { FacadeService } from '../shared/services/facade.service';
+import { DishService } from '../shared/services/dish.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,16 +12,14 @@ export class MenuComponent implements OnInit {
   dishes: Dish[];
   selectedDish: Dish;
 
-  constructor(private facadeService: FacadeService) {
-  }
+  constructor(private dishService: DishService) { }
 
   ngOnInit() {
-    this.facadeService.accountService.login('fake-user', 'password');
-    this.facadeService.dishService.getDishes().subscribe(dishes => this.dishes = dishes);
+    this.dishService.getDishes()
+      .then(dishes => this.dishes = dishes);
   }
 
   onSelect(dish: Dish) {
     this.selectedDish = dish;
   }
-
 }

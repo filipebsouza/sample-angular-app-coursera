@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of, from } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
-
 import { Promotion } from '../../shared/promotion.model';
 import { PROMOTIONS } from '../../shared/promotions.model';
 
@@ -13,23 +10,15 @@ export class PromotionService {
 
   constructor() { }
 
-  getPromotions(): Observable<Promotion[]> {
-    return of(PROMOTIONS);
+  getPromotions(): Promise<Promotion[]> {
+    return Promise.resolve(PROMOTIONS);
   }
 
-  getPromotion(id: string): Observable<Promotion> {
-    return from(PROMOTIONS)
-      .pipe(
-        filter(promo => promo.id === id),
-        first()
-      );
+  getPromotion(id: string): Promise<Promotion> {
+    return Promise.resolve(PROMOTIONS.filter(promo => promo.id === id)[0]);
   }
 
-  getFeaturedPromotion(): Observable<Promotion> {
-    return from(PROMOTIONS)
-      .pipe(
-        filter(promo => promo.featured),
-        first()
-      );
+  getFeaturedPromotion(): Promise<Promotion> {
+    return Promise.resolve(PROMOTIONS.filter(promo => promo.featured)[0]);
   }
 }

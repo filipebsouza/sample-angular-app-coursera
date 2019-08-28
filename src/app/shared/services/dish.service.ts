@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, from } from 'rxjs';
-import { filter, first } from 'rxjs/operators';
 
 import { Dish } from '../dish.model';
 import { DISHES } from '../dishes.model';
@@ -12,23 +10,15 @@ export class DishService {
 
   constructor() { }
 
-  getDishes(): Observable<Dish[]> {
-    return of(DISHES);
+  getDishes(): Promise<Dish[]> {
+    return Promise.resolve(DISHES);
   }
 
-  getDish(id: string): Observable<Dish> {
-    return from(DISHES)
-      .pipe(
-        filter(dish => dish.id === id),
-        first()
-      );
+  getDish(id: string): Promise<Dish> {
+    return Promise.resolve(DISHES.filter(dish => dish.id === id)[0]);
   }
 
-  getFeaturedDish(): Observable<Dish> {
-    return from(DISHES)
-      .pipe(
-        filter(dish => dish.featured),
-        first()
-      );
+  getFeaturedDish(): Promise<Dish> {
+    return Promise.resolve(DISHES.filter(dish => dish.featured)[0]);
   }
 }
