@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppRoutingModule } from './app-routing/app-routing.module';
@@ -49,7 +50,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     MatToolbarModule,
     FlexLayoutModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
     MatListModule,
@@ -59,6 +60,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatDialogModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatProgressSpinnerModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule
