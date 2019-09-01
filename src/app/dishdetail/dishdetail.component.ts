@@ -13,12 +13,15 @@ import { DishService } from '../shared/services/dish.service';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishIds: string[];
+  prev: string;
+  next: string;
 
   constructor(private route: ActivatedRoute, private location: Location, private dishService: DishService) { }
 
   ngOnInit() {
     const id = this.route.snapshot.params['id'];
-    this.dishService.getDish(id).then(dish => this.dish = dish);
+    this.dishService.getDish(id).subscribe(dish => this.dish = dish);
   }
 
   goBack(): void {
