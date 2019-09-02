@@ -1,6 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
@@ -30,8 +34,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { LoginComponent } from './login/login.component';
 
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
+import { baseURL } from './shared/baseurl';
 
 @NgModule({
   declarations: [
@@ -49,6 +52,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     FlexLayoutModule,
     MatFormFieldModule,
@@ -63,11 +69,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     MatSliderModule,
-    SharedModule,
-    FormsModule,
-    ReactiveFormsModule
+    SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'BaseURL',
+      useValue: baseURL
+    }
+  ],
   entryComponents: [
     LoginComponent
   ],

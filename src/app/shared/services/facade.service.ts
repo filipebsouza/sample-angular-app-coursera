@@ -4,6 +4,7 @@ import { AccountService } from './account.service';
 import { DishService } from './dish.service';
 import { PromotionService } from './promotion.service';
 import { LeaderService } from './leader.service';
+import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,13 @@ export class FacadeService {
       this._leaderService = this.injector.get(LeaderService);
     }
     return this._leaderService;
+  }
+
+  private _processHTTPMsgService: ProcessHTTPMsgService;
+  public get processHTTPMsgService(): ProcessHTTPMsgService {
+    if (!this._processHTTPMsgService) {
+      this._processHTTPMsgService = this.injector.get(ProcessHTTPMsgService);
+    }
+    return this._processHTTPMsgService;
   }
 }
