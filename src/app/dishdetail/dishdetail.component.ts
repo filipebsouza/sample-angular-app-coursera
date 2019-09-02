@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { switchMap } from 'rxjs/operators';
 
 import { Dish } from '../shared/dish.model';
+import { Comment } from '../shared/comment.model';
+
 import { DishService } from '../shared/services/dish.service';
 
 @Component({
@@ -18,8 +22,28 @@ export class DishdetailComponent implements OnInit {
   dishIds: string[];
   prev: string;
   next: string;
+  comment: Comment;
+  commentForm: FormGroup;
+  @ViewChild('fform', { static: false }) commentFormDirective: { resetForm: () => void; };
 
-  constructor(private route: ActivatedRoute, private location: Location, private dishService: DishService) { }
+  formErrors = {
+    'author': '',
+    'rating': '',
+    'comment': ''
+  };
+
+  validationMessages = {
+    'author': {
+      'required': 'Author Name is required.',
+    },
+    'comment': {
+      'required': 'Comment is required.',
+    }
+  };
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private location: Location, private dishService: DishService) {
+    this.createForm();
+  }
 
   ngOnInit() {
     this.dishService.getDishIds()
@@ -40,6 +64,55 @@ export class DishdetailComponent implements OnInit {
 
   goBack(): void {
     this.location.back();
+  }
+
+  createForm() {
+    this.commentForm = this.fb.group({
+      author: ['', [Validators.required]],
+      rating: ['5'],
+      comment: ['', [Validators.required]],
+    });
+
+    this.commentForm.valueChanges
+      .subscribe(data => this.onValueChanged(data));
+
+    this.onValueChanged(); // (re)set validation messages now
+  }
+
+  onValueChanged(data?: any) {
+    if (!this.commentForm) { return; }
+    const form = this.commentForm;
+
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  onSubmit() {
+    this.comment = this.commentForm.value;
+    this.comment.date = new Date().toLocaleDateString();
+
+    this.dish.comments.push(this.comment);
+
+    this.commentForm.reset({
+      author: '',
+      rating: '5',
+      comment: ''
+    });
+    this.commentFormDirective.resetForm();
   }
 
 }
