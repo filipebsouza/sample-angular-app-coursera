@@ -8,7 +8,7 @@
                     <h3>{{dish.name | uppercase}}</h3>
                 </mat-card-title>
             </mat-card-header>
-            <img mat-card-image src="{{BaseURL + dish.image}}"" alt={{dish.name}}>
+            <img mat-card-image src="{{BaseURL + dish.image}}" alt={{dish.name}}>
             <mat-card-content>
                 <p>{{dish.description}}</p>
             </mat-card-content>
@@ -27,7 +27,7 @@
         </mat-card>
     </div>
 
-    <div fxFlex="40" *ngIf="dish">
+    <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
         <h3>Comments</h3>
         <mat-list>
             <mat-list-item *ngFor="let comment of dish.comments">
@@ -39,7 +39,7 @@
         <p *ngIf="!dish">Not comments</p>
     </div>
 
-    <div fxFlex *ngIf="dish">
+    <div fxFlex *ngIf="dish" [@visibility]="visibility">
         <form novalidate [formGroup]="commentForm" #fform="ngForm" (ngSubmit)="onSubmit()">
             <p>
                 <mat-form-field class="half-width">
