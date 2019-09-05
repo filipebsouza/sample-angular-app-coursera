@@ -12,13 +12,17 @@ import { Comment } from '../shared/comment.model';
 
 import { DishService } from '../shared/services/dish.service';
 
-import { visibility } from '../shared/animations/app.animation';
+import { flyInOut, visibility, expand } from '../shared/animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
-  animations: [visibility()]
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [flyInOut(), visibility(), expand()]
 })
 export class DishdetailComponent implements OnInit {
 
@@ -57,11 +61,15 @@ export class DishdetailComponent implements OnInit {
     this.dishService.getDishIds()
       .subscribe(dishIds => this.dishIds = dishIds);
     this.route.params
-      .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
+      .pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden';
+        return this.dishService.getDish(params['id']);
+      }))
       .subscribe(dish => {
         this.dish = dish;
         this.dishcopy = dish;
         this.setPrevNext(dish.id);
+        this.visibility = 'shown';
       }, errmess => this.errMess = <any>errmess);
   }
 
