@@ -12,23 +12,13 @@ import { Comment } from '../shared/comment.model';
 
 import { DishService } from '../shared/services/dish.service';
 
+import { visibility } from '../shared/animations/app.animation';
+
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
-  animations: [
-    trigger('visibility', [
-      state('shown', style({
-        transform: 'scale(1.0)',
-        opacity: 1
-      })),
-      state('hidden', style({
-        transform: 'scale(0.5)',
-        opacity: 0
-      })),
-      transition('* => *', animate('0.5s ease-in-out'))
-    ])
-  ]
+  animations: [visibility()]
 })
 export class DishdetailComponent implements OnInit {
 
