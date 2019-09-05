@@ -116,7 +116,7 @@ export class ContactComponent implements OnInit {
         this.feedbackFormDirective.resetForm();
         this.submitting = false;
 
-        setTimeout(function () { this.feedback = undefined }, 5000);
+        setTimeout(() => this.feedback = undefined, 5000);
       }, errmess => {
         this.feedbackErrMess = <any>errmess;
         this.submitting = false;
