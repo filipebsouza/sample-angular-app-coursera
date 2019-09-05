@@ -4,15 +4,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Feedback, ContactType } from '../shared/feedback.model';
 
+import { flyInOut } from '../shared/animations/app.animation';
+import { FeedbackService } from '../shared/services/feedback.service';
+
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+  },
+  animations: [flyInOut()]
 })
 export class ContactComponent implements OnInit {
 
   feedbackForm: FormGroup;
   feedback: Feedback;
+  feedbackErrMess: string;
+  submitting = false;
   contactType = ContactType;
   @ViewChild('fform', { static: false }) feedbackFormDirective: { resetForm: () => void; };
 
@@ -44,7 +54,7 @@ export class ContactComponent implements OnInit {
     },
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private feedBackService: FeedbackService) {
     this.createForm();
   }
 
@@ -90,18 +100,27 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
-    this.feedback = this.feedbackForm.value;
-    console.log(this.feedback);
-    this.feedbackForm.reset({
-      firstname: '',
-      lastname: '',
-      telnum: 0,
-      email: '',
-      agree: false,
-      contacttype: 'None',
-      message: ''
-    });
-    this.feedbackFormDirective.resetForm();
+    this.submitting = true;
+    this.feedBackService.submitFeedback(this.feedbackForm.value)
+      .subscribe(feedBackSaved => {
+        this.feedback = feedBackSaved;
+        this.feedbackForm.reset({
+          firstname: '',
+          lastname: '',
+          telnum: 0,
+          email: '',
+          agree: false,
+          contacttype: 'None',
+          message: ''
+        });
+        this.feedbackFormDirective.resetForm();
+        this.submitting = false;
+
+        setTimeout(function () { this.feedback = undefined }, 5000);
+      }, errmess => {
+        this.feedbackErrMess = <any>errmess;
+        this.submitting = false;
+      });
   }
 
 }
