@@ -44,6 +44,11 @@
         <h4>Loading . . . Please Wait</h4>
     </div>
 
+    <div fxFlex *ngIf="promotionErrMess">
+        <h2>Error</h2>
+        <h4>{{promotionErrMess}}</h4>
+    </div>
+
     <mat-card *ngIf="leader" fxFlex [@expand]>
         <mat-card-header>
             <div mat-card-avatar></div>
@@ -61,6 +66,11 @@
     <div fxFlex [hidden]="leader">
         <mat-spinner></mat-spinner>
         <h4>Loading . . . Please Wait</h4>
+    </div>
+
+    <div fxFlex *ngIf="leaderErrMess">
+        <h2>Error</h2>
+        <h4>{{leaderErrMess}}</h4>
     </div>
 
 </div>
