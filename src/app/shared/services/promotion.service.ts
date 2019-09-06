@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { baseURL } from '../baseurl';
 
 import { Observable } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { ProcessHTTPMsgService } from './process-httpmsg.service';
 
@@ -28,6 +28,7 @@ export class PromotionService {
 
   getFeaturedPromotion(): Observable<Promotion> {
     return this.http.get<Promotion>(`${baseURL}promotions?featured=true`)
+      .pipe(map(dishes => dishes[0]))
       .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 }

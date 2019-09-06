@@ -51,6 +51,12 @@
           "rating": 3,
           "comment": "asdasdasd",
           "date": "2019-09-02T23:41:23.361Z"
+        },
+        {
+          "author": "Test Author",
+          "rating": "5",
+          "comment": "Test Comment",
+          "date": "2019-09-06T15:25:07.062Z"
         }
       ]
     },
